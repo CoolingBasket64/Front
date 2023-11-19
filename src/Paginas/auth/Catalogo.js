@@ -2,26 +2,28 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 
-const IndexA = () => {
+const Catalogo = () => {
   return (
+
 <div>
       <link rel="stylesheet" href="style.css" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
 <div className="body-index-c">
 
-<nav className="navA">
+<nav>
           <input type="checkbox" id="check" />
           <label htmlFor="check" className="checkbtn">
             <i className="fas fa-bars" />
           </label>
+          
           <Link to={"#"} className="enlace">
             <img src="logos.png" alt className="logo" />
           </Link>
-          <ul className="ulA">
-            <li className="liA"><Link to={"/IndexA"} className="activeA" >Inicio</Link></li>
-            <li className="liA"><Link to={"/Productos"}>Mis productos</Link></li>
-            <li className="liA"><Link to={"/Productos"}>Pedidos</Link></li>
-            <li className="liA"><Link to={"/index"}>Cerrar sesión</Link></li>
+          
+          <ul>
+            <li><Link to={"/index"} className="active" >Inicio</Link></li>
+            <li><Link to={"/Catalogo"}>Catalogo</Link></li>
+            <li><Link to={"/login"}>Iniciar sesión</Link></li>
 
           </ul>
         </nav>
@@ -30,28 +32,60 @@ const IndexA = () => {
 <header>
 <h1>Catálogo de Compra</h1>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
+
 
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+      <form className="">
+          <h2 className="form-title-l">Registrar Compra</h2>
+          <p className="form-texto-l">Registrar datos de contacto para la compra</p>
+          <div className="form-container-l">
+            <div className="form-group-l">
+              <input type="text" id="nombre" className="form-input-l" placeholder=" " />
+              <label htmlFor="nombre" className="form-label-l">Nombres:</label>
+              <span className="form-line" />
+            </div>
+            <div className="form-group-l">
+              <input type="text" id="apellido" className="form-input-l" placeholder=" " />
+              <label htmlFor="apellido" className="form-label-l">Apellidos:</label>
+              <span className="form-line" />
+            </div>
+            <div className="form-group-l">
+              <input type="email" id="correo" className="form-input-l" placeholder=" " />
+              <label htmlFor="correo" className="form-label-l">Correo:</label>
+              <span className="form-line" />
+            </div>
+            <div className="form-group-l">
+              <input type="number" id="numero" className="form-input-l" placeholder=" " />
+              <label htmlFor="numero" className="form-label-l">Numero de contacto:</label>
+              <span className="form-line" />
+            </div>
+            
+            <div className="form-group-l">
+              <input type="text" id="direccion" className="form-input-l" placeholder=" " />
+              <label htmlFor="direccion" className="form-label-l">Direccion:</label>
+              <span className="form-line" />
+            </div>
+            <center>
+              <input type="submit" className="form-submit-le" defaultValue="Registrarse" />
+
+            </center>
+
+          </div>
+        </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
+      
     </div>
   </div>
 </div>
+
 </header>
 </center>
 <div className="catalogo">
@@ -111,7 +145,7 @@ const IndexA = () => {
 </div>
 
 
-  )
+)
 }
 
-export default IndexA;
+export default Catalogo;

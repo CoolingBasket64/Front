@@ -8,7 +8,7 @@ const Productos = () => {
       <link rel="stylesheet" href="style.css" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
       <div className="body">
-        <nav className="navA">
+      <nav className="navA">
           <input type="checkbox" id="check" />
           <label htmlFor="check" className="checkbtn">
             <i className="fas fa-bars" />
@@ -17,13 +17,14 @@ const Productos = () => {
             <img src="logos.png" alt className="logo" />
           </Link>
           <ul className="ulA">
-            <li className="liA"><Link to={"/IndexA"} className="active" >Inicio</Link></li>
-            <li className="liA"><Link to={"#"}>Mis productos</Link></li>
-            <li className="liA"><Link to={"#"}>Usuario</Link></li>
-            <li className="liA"><Link to={"/login"}>Cerrar sesión</Link></li>
+          <li><Link to={"/IndexA"} className="active" >Inicio</Link></li>
+            <li><Link to={"/Productos"}>Mis productos</Link></li>
+            <li><Link to={"/Productos"}>Pedidos</Link></li>
+            <li><Link to={"/index"}>Cerrar sesión</Link></li>
         
           </ul>
         </nav>
+        <div className="container">
         <form className="form-l">
             <center>
           <h2 className="form-title-er">Que desea realizar</h2>
@@ -31,14 +32,14 @@ const Productos = () => {
           <div className="form-container-l">
             
             <center>
-              <Link to={"/crear-cuenta"}><button className="button-l">Consultar Productos</button></Link>
+              <Link to={"/productosC"}><button className="button-l">Consultar Productos</button></Link>
               <Link to={"/RProductos"}><button className="button-l">Registrar Productos</button></Link>
             </center>
             
    
           </div>
         </form>
-
+        </div>
         
       <div className="footer">
       <p> Creado por: Santiago Carreño | Aprendiz Sena </p><strong>©2023</strong>.
