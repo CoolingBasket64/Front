@@ -110,14 +110,13 @@ const onSubmit = (e) => {
               <div className="form-group-l">
                 <label htmlFor="categoria" className="form-label-select">Categoria:</label>
                 <select name="categoria" value={categoria} onChange={onChange} required id="lang">
-                  <option value="javascript">JavaScript</option>
-                  <option value="php">PHP</option>
-                  <option value="java">Java</option>
-                  <option value="golang">Golang</option>
-                  <option value="python">Python</option>
-                  <option value="c#">C#</option>
-                  <option value="C++">C++</option>
-                  <option value="erlang">Erlang</option>
+                  <option value="mentas">Mentas</option>
+                  <option value="chocolates">Chocolates</option>
+                  <option value="chicles">Chicles</option>
+                  <option value="gomitas">Gomitas</option>
+                  <option value="masmelos">Masmelos</option>
+                  <option value="bocadillos">Bocadillos</option>
+                 
                 </select>
                 <span className="form-line" />
               </div>
@@ -139,11 +138,11 @@ const onSubmit = (e) => {
                 </select>
                 <span className="form-line" />
               </div>
-        
-             
-              <div className="input-group mt-3">
+
               <label htmlFor="archivoInput" className="form-label-select">Imagen del producto:</label>
-              <br></br>
+              <div className="input-group mt-3">
+              
+              
                 <input type="file" className='form-control' id="archivoInput" name='archivoInput'  onChange={onChange} value={archivoInput} required  />
               </div>    
 

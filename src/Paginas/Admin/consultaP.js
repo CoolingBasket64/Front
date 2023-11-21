@@ -159,14 +159,12 @@ const ProductosC = () => {
               <div className="form-group-l">
                 <label htmlFor="categoria" className="form-label-select">Categoria:</label>
                 <select name="categoria" value={nuevaInformacion.categoria} onChange={handleChangeNuevaInformacion} required id="lang">
-                  <option value="javascript">JavaScript</option>
-                  <option value="php">PHP</option>
-                  <option value="java">Java</option>
-                  <option value="golang">Golang</option>
-                  <option value="python">Python</option>
-                  <option value="c#">C#</option>
-                  <option value="C++">C++</option>
-                  <option value="erlang">Erlang</option>
+                <option value="mentas">Mentas</option>
+                  <option value="chocolates">Chocolates</option>
+                  <option value="chicles">Chicles</option>
+                  <option value="gomitas">Gomitas</option>
+                  <option value="masmelos">Masmelos</option>
+                  <option value="bocadillos">Bocadillos</option>
                 </select>
                 <span className="form-line" />
               </div>

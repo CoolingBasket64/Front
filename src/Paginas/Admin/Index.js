@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
@@ -112,7 +112,6 @@ headers: {
     });
   };
 
-
 const onSubmit = (e) => {
     e.preventDefault();
     registerCompra()
@@ -135,7 +134,7 @@ const onSubmit = (e) => {
             <li className="liA"><Link to={"/IndexA"} className="activeA" >Inicio</Link></li>
             <li className="liA"><Link to={"/Productos"}>Mis productos</Link></li>
             <li className="liA"><Link to={"/ConsP"}>Pedidos</Link></li>
-            <li className="liA"><Link to={"/index"}>Cerrar sesión</Link></li>
+            <li className="liA"><Link to={"/index"} >Cerrar sesión</Link></li>
 
           </ul>
         </nav>
