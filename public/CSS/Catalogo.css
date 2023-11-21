@@ -38,12 +38,14 @@
     flex-wrap: wrap;
     margin-left: 300px;
     margin-right: 300px;
+   
   }
   
   .producto {
     width: 300px;
     border: 1px solid #ccc;
     padding: 15px;
+    background-color: #f8f8f8;
     margin: 10px;
     text-align: center;
   }

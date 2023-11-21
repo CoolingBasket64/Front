@@ -8,6 +8,7 @@ import Productos from './Paginas/Admin/Productos';
 import RegistrarProductos from './Paginas/Admin/RegistrarProducto';
 import Catalogo from './Paginas/auth/Catalogo';
 import ProductosC from './Paginas/Admin/consultaP';
+import ConsP from './Paginas/Admin/consultaPedi';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/consultarP' exact element={<consultarP/>}/>
           <Route path='/Catalogo' exact element={<Catalogo/>}/>
           <Route path='/productosC' exact element={<ProductosC/>}/>
+          <Route path='/ConsP' exact element={<ConsP/>}/>
       
          
         </Routes>

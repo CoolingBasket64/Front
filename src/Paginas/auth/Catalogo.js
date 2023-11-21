@@ -1,8 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 
 const Catalogo = () => {
+  const [productos, setProductos] = useState([]);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [nuevaInformacion, setNuevaInformacion] = useState({
+    nombreP: "",
+    categoria: "",
+    precio: "",
+    region: "",
+    archivoInput: ""
+  });
+  const [mensajeExito, setMensajeExito] = useState("");
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8888/api/v1/front/products");
+        setProductos(response.data.results);
+      } catch (error) {
+        console.error("Error al obtener productos:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+
+  const handleEditarProducto = (producto) => {
+    setProductoSeleccionado(producto);
+    setNuevaInformacion({
+      nombreP: producto.nombreP,
+      categoria: producto.categoria,
+      precio: producto.precio,
+      region: producto.region,
+      archivoInput: producto.archivoInput
+    });
+  };
+
+
+  const handleChangeNuevaInformacion = (e) => {
+    setNuevaInformacion({
+      ...nuevaInformacion,
+      [e.target.name]: e.target.value
+    });
+  };
+
+
+  const [compra, setCompra] = useState({
+    nombreP: '',
+    nombre: '',
+    apellido: '',
+    correo: '',
+    numero: '',
+    direccion: ''
+  });
+
+  const{nombreP, nombre, apellido, correo, numero, direccion} =compra;
+const [error, setError] = useState('');
+const [successMessage, setSuccessMessage] = useState('');
+ 
+
+  const registerCompra = async () => {
+    try {
+
+      const response = await axios.post('http://localhost:8888/api/v1/front/compras/register', compra, {
+headers: {
+'Content-Type': 'application/json',
+},
+});  
+    setSuccessMessage('compra registrada con éxito');
+    setError('');
+    } catch (error) {
+    console.error('Error en el registro:', error);
+
+    if (error.response) {
+      console.log('Respuesta del servidor:', error.response);
+      if (error.response.status === 500 && error.response.data && error.response.data.message) {
+        setError('Error: ' + error.response.data.message);
+      } else {
+        setError('Error: Hubo un error al momento de registrar la venta, vuelve a intentarlo' );
+      }
+    } else {
+      setError('Error en el : ' + error.message);
+    }
+  }
+};
+
+  const onChange = (e) => {
+    setCompra({
+      ...compra,
+      [e.target.name]: e.target.value
+    });
+  };
+
+
+const onSubmit = (e) => {
+    e.preventDefault();
+    registerCompra()
+  };
+
+
+
+
+
   return (
 
 <div>
@@ -27,7 +130,7 @@ const Catalogo = () => {
 
           </ul>
         </nav>
-        <div className="container-c">
+        <div className="container-cat">
           <center>
 <header>
 <h1>Catálogo de Compra</h1>
@@ -43,38 +146,52 @@ const Catalogo = () => {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form className="">
+      <form autoComplete='off' onSubmit={onSubmit} className="form-r">
           <h2 className="form-title-l">Registrar Compra</h2>
-          <p className="form-texto-l">Registrar datos de contacto para la compra</p>
+          {error && (
+            <div className='form-texto-l-mal'>
+            {error}
+            </div>
+            )}
+            {successMessage && (
+            <div className='form-texto-l-bien'>
+                {successMessage}
+            </div>
+            )}
           <div className="form-container-l">
+          <div className="form-group-l">
+              <input type="text" id="nombreP" name="nombreP"  onChange={onChange} value={nombreP} required className="form-input-l" placeholder=" " />
+              <label htmlFor="nombre" className="form-label-l">Nombre Producto:</label>
+              <span className="form-line" />
+            </div>
             <div className="form-group-l">
-              <input type="text" id="nombre" className="form-input-l" placeholder=" " />
+              <input type="text" id="nombre" name="nombre" onChange={onChange} value={nombre} required className="form-input-l" placeholder=" " />
               <label htmlFor="nombre" className="form-label-l">Nombres:</label>
               <span className="form-line" />
             </div>
             <div className="form-group-l">
-              <input type="text" id="apellido" className="form-input-l" placeholder=" " />
+              <input type="text" id="apellido" name="apellido" onChange={onChange} value={apellido} required className="form-input-l" placeholder=" " />
               <label htmlFor="apellido" className="form-label-l">Apellidos:</label>
               <span className="form-line" />
             </div>
             <div className="form-group-l">
-              <input type="email" id="correo" className="form-input-l" placeholder=" " />
+              <input type="email" id="correo" name="correo" onChange={onChange} value={correo} required className="form-input-l" placeholder=" " />
               <label htmlFor="correo" className="form-label-l">Correo:</label>
               <span className="form-line" />
             </div>
             <div className="form-group-l">
-              <input type="number" id="numero" className="form-input-l" placeholder=" " />
+              <input type="text" id="numero" name="numero" onChange={onChange} value={numero} required className="form-input-l" placeholder=" " />
               <label htmlFor="numero" className="form-label-l">Numero de contacto:</label>
               <span className="form-line" />
             </div>
             
             <div className="form-group-l">
-              <input type="text" id="direccion" className="form-input-l" placeholder=" " />
+              <input type="text" id="direccion" name="direccion" onChange={onChange} value={direccion} className="form-input-l" placeholder=" " />
               <label htmlFor="direccion" className="form-label-l">Direccion:</label>
               <span className="form-line" />
             </div>
             <center>
-              <input type="submit" className="form-submit-le" defaultValue="Registrarse" />
+              <input type="submit" className="form-submit-le" value="Registrar" />
 
             </center>
 
@@ -88,49 +205,16 @@ const Catalogo = () => {
 
 </header>
 </center>
+
 <div className="catalogo">
+{productos.map((producto) => (
 <div className="producto">
- <img src="carrusel.png" alt="Producto 1" />
- <h2>Producto 1</h2>
- <p>Descripción del Producto 1. Precio: $XX</p>
- <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar al Carrito</button>
+<img src={producto.archivoInput} alt="Producto 1" />
+<h2>{producto.nombreP}</h2>
+<p/>Precio: ${producto.precio}<p/>
+<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={() => handleEditarProducto(producto)}>Agregar al Carrito</button>
 </div>
-
-<div className="producto">
- <img src="carrusel.png" alt="Producto 1" />
- <h2>Producto 1</h2>
- <p>Descripción del Producto 1. Precio: $XX</p>
- <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar al Carrito</button>
-</div>
-
-<div className="producto">
- <img src="carrusel.png" alt="Producto 1" />
- <h2>Producto 1</h2>
- <p>Descripción del Producto 1. Precio: $XX</p>
- <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar al Carrito</button>
-</div>
-
-<div className="producto">
- <img src="carrusel.png" alt="Producto 1" />
- <h2>Producto 1</h2>
- <p>Descripción del Producto 1. Precio: $XX</p>
- <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar al Carrito</button>
-</div>
-
-<div className="producto">
- <img src="carrusel.png" alt="Producto 1" />
- <h2>Producto 1</h2>
- <p>Descripción del Producto 1. Precio: $XX</p>
- <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar al Carrito</button>
-</div>
-
-<div className="producto">
- <img src="carrusel.png" alt="Producto 1" />
- <h2>Producto 1</h2>
- <p>Descripción del Producto 1. Precio: $XX</p>
- <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar al Carrito</button>
-</div>
-
+ ))}
 
 
 </div>

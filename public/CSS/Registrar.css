@@ -229,6 +229,11 @@ select{
     transition: transform .4s;
 }
 
+.container-cat{
+    padding-top: 13%;
+    padding-bottom: 15%;
+}
+
 .form-input-l:focus ~ .form-line-l,
 .form-input-l:not(:placeholder-shown) + .form-line-l{
     transform: scale(1);

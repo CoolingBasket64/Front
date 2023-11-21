@@ -59,17 +59,7 @@ const onSubmit = (e) => {
     registerProducto()
   };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleLogout = () => {
-    // Limpiar localStorage al cerrar sesión
-    localStorage.removeItem('name');
-    // Redirigir a la página de inicio de sesión
-    // Puedes usar useHistory() o Link para redirigir según tu configuración de enrutamiento
-    window.location.href = '/';
-  };
+ 
 
 
 
@@ -89,7 +79,7 @@ const onSubmit = (e) => {
           <ul className="ulA">
             <li><Link to={"/IndexA"} className="active" >Inicio</Link></li>
             <li><Link to={"/Productos"}>Mis productos</Link></li>
-            <li><Link to={"/Productos"}>Pedidos</Link></li>
+            <li><Link to={"/ConsP"}>Pedidos</Link></li>
             <li><Link to={"/index"}>Cerrar sesión</Link></li>
 
           </ul>
@@ -113,7 +103,7 @@ const onSubmit = (e) => {
             )}
             <div className="form-container-l">
               <div className="form-group-l">
-                <input type="text" id="nombreP" name='nombreP' onChange={onChange} value={producto.nombreP} required className="form-input-l" placeholder=" " />
+                <input type="text" id="nombreP" name='nombreP' onChange={onChange} value={nombreP} required className="form-input-l" placeholder=" " />
                 <label htmlFor="nombreP" className="form-label-l">Nombre Producto:</label>
                 <span className="form-line" />
               </div>

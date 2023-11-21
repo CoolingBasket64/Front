@@ -19,7 +19,7 @@ const Productos = () => {
           <ul className="ulA">
           <li><Link to={"/IndexA"} className="active" >Inicio</Link></li>
             <li><Link to={"/Productos"}>Mis productos</Link></li>
-            <li><Link to={"/Productos"}>Pedidos</Link></li>
+            <li><Link to={"/ConsP"}>Pedidos</Link></li>
             <li><Link to={"/index"}>Cerrar sesión</Link></li>
         
           </ul>

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const moongose = require('mongoose')
 const productsModel = require ('../models/productModels')
 
 
@@ -115,8 +116,8 @@ router.post('/register',
 
             })
 
-            router.put('/:id',
-  async (request, response)=>{
+router.put('/:id',
+ async (request, response)=>{
     try {
         const productoId= request.params.id
 

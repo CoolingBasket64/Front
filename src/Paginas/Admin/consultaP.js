@@ -6,8 +6,7 @@ import axios from "axios";
 
 
 const ProductosC = () => {
-
-    const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [nuevaInformacion, setNuevaInformacion] = useState({
       nombreP: "",
@@ -118,7 +117,7 @@ const ProductosC = () => {
         <ul className="ulA">
         <li><Link to={"/IndexA"} className="active" >Inicio</Link></li>
           <li><Link to={"/Productos"}>Mis productos</Link></li>
-          <li><Link to={"/Productos"}>Pedidos</Link></li>
+          <li><Link to={"/ConsP"}>Pedidos</Link></li>
           <li><Link to={"/index"}>Cerrar sesión</Link></li>
       
         </ul>
@@ -145,7 +144,11 @@ const ProductosC = () => {
             <center>
               <h2 className="form-title-l">Registrar Productos</h2>
             </center>
-           
+            {mensajeExito && (
+        <div className="form-texto-l-bien">
+          <p>{mensajeExito}</p> <button onClick={handleCerrarMensajeExito}>&times;</button>
+        </div>
+      )}
            
             <div className="form-container-l">
               <div className="form-group-l">

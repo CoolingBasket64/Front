@@ -27,6 +27,8 @@ const usersRoutes = require('./routes/userRoutes');
 app.use('/api/v1/front/users', usersRoutes);
 const productsRoutes = require('./routes/productRoutes');
 app.use('/api/v1/front/products', productsRoutes);
+const compraRoutes = require('./routes/compraRoutes');
+app.use('/api/v1/front/compras', compraRoutes);
 
 // Iniciar el servidor
 app.listen(puerto, () => {
