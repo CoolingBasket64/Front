@@ -4,8 +4,12 @@ const jwt = require('jsonwebtoken')
 
 const compraSchema = new mongoose.Schema(
     {
+        nombreE:{
+            type:String,
+        },
         nombreP:{
             type:String,
+            unique: false,
         },
         nombre:{
             type:String,

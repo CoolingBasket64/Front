@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema(
     {
         nombreE:{
             type:String,
-            unique:true,
+
         },
         nit:{
             type:String,

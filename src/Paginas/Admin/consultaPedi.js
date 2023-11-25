@@ -5,7 +5,7 @@ import axios from "axios";
 
 const ConsP = () => {
 
-
+  const getnombre = localStorage.getItem('nombreE');
   
     const [compras, setCompras] = useState([]);
     const [compraSeleccionada, setCompraSeleccionada] = useState(null);
@@ -26,8 +26,8 @@ const ConsP = () => {
     useEffect(() => {
       const fetchCompra = async () => {
         try {
-          const response = await axios.get("http://localhost:8888/api/v1/front/compras");
-          setCompras(response.data.results);
+          const response = await axios.get(`http://localhost:8888/api/v1/front/compras/pedido/${getnombre}`);
+          setCompras(response.data.products);
         } catch (error) {
           console.error("Error al obtener pedidos:", error);
         }
@@ -210,11 +210,12 @@ const ConsP = () => {
   <thead>
     <tr>
     <th>#</th>
+      <th>Nombre Producto</th>
       <th>Nombre</th>
-      <th>Categoria</th>
-      <th>Precio</th>
-      <th>Region</th>
-      <th>Imagen</th>
+      <th>Apellido</th>
+      <th>Correo</th>
+      <th>Numero</th>
+      <th>Direccion</th>
       <th>Acciones</th>
     </tr>
   </thead>

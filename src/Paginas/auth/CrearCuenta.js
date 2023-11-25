@@ -76,7 +76,7 @@ const onSubmit = (e) => {
         </nav>
       <div className="container">
         <form autoComplete='off' onSubmit={onSubmit} className="form-r">
-          <h2 className="form-title-l">Registrarse</h2>
+          <h2 className="form-title-l">Registrar Empresa</h2>
 
           {successMessage && (
         <div className='form-texto-l-bien'>

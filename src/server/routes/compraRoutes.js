@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const moongose = require ('mongoose')
+const empresaModel = require('../models/userModels')
 const compraModel = require ('../models/compraModels')
 
 
@@ -39,11 +40,12 @@ router.get('/',
 
 router.post('/register', 
             async(req, res)=>{
-                const {nombreP, nombre, apellido, correo, numero, direccion} = req.body;
+                const {nombreP, nombreE, nombre, apellido, correo, numero, direccion} = req.body;
                 try {
                     const compra = 
                     await compraModel.create({
                         nombreP, 
+                        nombreE, 
                         nombre, 
                         apellido, 
                         correo, 
@@ -67,6 +69,36 @@ router.post('/register',
                 }
 
             })
+
+            router.get('/pedido/:nombreE', async(req, res)=>{
+
+                const nombreEmpresa = req.params.nombreE;
+                try {
+                    // Buscar el usuario por su correo electrónico
+                    const user = await empresaModel.findOne({ nombreE: nombreEmpresa });
+              
+                    if (!user) {
+                        return res.status(404).json({
+                            success: false,
+                            message: 'Empresa no encontrada',
+                        });
+                    }
+              
+                    // Filtrar los productos asociados al usuario
+                    const products = await compraModel.find({ nombreE: user.nombreE });
+              
+                    res.status(200).json({
+                        success: true,
+                        products,
+                    });
+                } catch (error) {
+                    console.error('Error al obtener productos:', error);
+                    res.status(500).json({
+                        success: false,
+                        message: 'Error interno del servidor',
+                    });
+                }
+              });
 
             router.put('/:id',
             async (request, response)=>{

@@ -7,6 +7,7 @@ const Catalogo = () => {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [nuevaInformacion, setNuevaInformacion] = useState({
+    nombreE: "",
     nombreP: "",
     categoria: "",
     precio: "",
@@ -32,6 +33,7 @@ const Catalogo = () => {
   const handleEditarProducto = (producto) => {
     setProductoSeleccionado(producto);
     setNuevaInformacion({
+      nombreE: producto.nombreE,
       nombreP: producto.nombreP,
       categoria: producto.categoria,
       precio: producto.precio,
@@ -51,6 +53,7 @@ const Catalogo = () => {
 
   const [compra, setCompra] = useState({
     nombreP: '',
+    nombreE: '',
     nombre: '',
     apellido: '',
     correo: '',
@@ -58,7 +61,13 @@ const Catalogo = () => {
     direccion: ''
   });
 
-  const{nombreP, nombre, apellido, correo, numero, direccion} =compra;
+  const parseToken = (token) => {
+    const decodedToken = token.split('.')[1];
+    const decodedData = JSON.parse(atob(decodedToken));
+    return decodedData;
+  };
+
+  const{nombreP, nombreE, nombre, apellido, correo, numero, direccion} =compra;
 const [error, setError] = useState('');
 const [successMessage, setSuccessMessage] = useState('');
  
@@ -66,11 +75,27 @@ const [successMessage, setSuccessMessage] = useState('');
   const registerCompra = async () => {
     try {
 
-      const response = await axios.post('http://localhost:8888/api/v1/front/compras/register', compra, {
+      const response = await axios.post('http://localhost:8888/api/v1/front/compras/register',  {
+        ...compra,
+            nombreP: llamarP, 
+            nombreE: llamarE, 
 headers: {
 'Content-Type': 'application/json',
 },
+
+
 });  
+
+if (response.data && response.data.token) {
+  const tokenPayload = parseToken(response.data.token);
+  if (tokenPayload ) { 
+  const { nombreE, token } = tokenPayload; 
+      localStorage.setItem('token', token);
+    localStorage.setItem('nombreE', nombreE);
+     
+         }
+    } 
+
     setSuccessMessage('compra registrada con éxito');
     setError('');
     } catch (error) {
@@ -87,6 +112,8 @@ headers: {
       setError('Error en el : ' + error.message);
     }
   }
+
+
 };
 
   const onChange = (e) => {
@@ -101,6 +128,8 @@ const onSubmit = (e) => {
     e.preventDefault();
     registerCompra()
   };
+  const llamarP = nuevaInformacion.nombreP
+  const llamarE = nuevaInformacion.nombreE
 
 
 
@@ -160,7 +189,12 @@ const onSubmit = (e) => {
             )}
           <div className="form-container-l">
           <div className="form-group-l">
-              <input type="text" id="nombreP" name="nombreP"  onChange={onChange} value={nombreP} required className="form-input-l" placeholder=" " />
+              <input type="text" id="nombreE" name="nombreE" hidden  onChange={onChange} value={llamarE} required className="form-input-l" placeholder=" " />
+              <label htmlFor="nombre" hidden className="form-label-l">Nombre Empresa:</label>
+              <span className="form-line" />
+            </div>
+          <div className="form-group-l">
+              <input type="text" id="nombreP" name="nombreP"  onChange={onChange} value={llamarP} required className="form-input-l" placeholder=" " />
               <label htmlFor="nombre" className="form-label-l">Nombre Producto:</label>
               <span className="form-line" />
             </div>

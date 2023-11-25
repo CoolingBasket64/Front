@@ -5,8 +5,9 @@ import axios from "axios";
 
 const IndexA = () => {
 
+  const getnombre = localStorage.getItem('nombreE');
+
   const [productos, setProductos] = useState([]);
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [nuevaInformacion, setNuevaInformacion] = useState({
     nombreP: "",
     categoria: "",
@@ -19,8 +20,8 @@ const IndexA = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8888/api/v1/front/products");
-        setProductos(response.data.results);
+        const response = await axios.get(`http://localhost:8888/api/v1/front/products/empresa/${getnombre}`);
+        setProductos(response.data.products);
       } catch (error) {
         console.error("Error al obtener productos:", error);
       }
@@ -30,8 +31,8 @@ const IndexA = () => {
   }, []);
 
 
+
   const handleEditarProducto = (producto) => {
-    setProductoSeleccionado(producto);
     setNuevaInformacion({
       nombreP: producto.nombreP,
       categoria: producto.categoria,
@@ -65,57 +66,13 @@ const IndexA = () => {
   };
 
 
-  const [compra, setCompra] = useState({
-    nombreP: '',
-    nombre: '',
-    apellido: '',
-    correo: '',
-    numero: '',
-    direccion: ''
-  });
-
-  const{nombreP, nombre, apellido, correo, numero, direccion} =compra;
+  const handleCerrarMensajeExito = () => {
+    setMensajeExito("");
+  };
 const [error, setError] = useState('');
 const [successMessage, setSuccessMessage] = useState('');
  
 
-  const registerCompra = async () => {
-    try {
-
-      const response = await axios.post('http://localhost:8888/api/v1/front/compras/register', compra, {
-headers: {
-'Content-Type': 'application/json',
-},
-});  
-    setSuccessMessage('compra registrada con éxito');
-    setError('');
-    } catch (error) {
-    console.error('Error en el registro:', error);
-
-    if (error.response) {
-      console.log('Respuesta del servidor:', error.response);
-      if (error.response.status === 500 && error.response.data && error.response.data.message) {
-        setError('Error: ' + error.response.data.message);
-      } else {
-        setError('Error: Hubo un error al momento de registrar la venta, vuelve a intentarlo' );
-      }
-    } else {
-      setError('Error en el : ' + error.message);
-    }
-  }
-};
-
-  const onChange = (e) => {
-    setCompra({
-      ...compra,
-      [e.target.name]: e.target.value
-    });
-  };
-
-const onSubmit = (e) => {
-    e.preventDefault();
-    registerCompra()
-  };
   return (
 <div>
       <link rel="stylesheet" href="style.css" />
@@ -141,23 +98,29 @@ const onSubmit = (e) => {
         <div className="container-c">
           <center>
           <header>
-<h1>Catálogo de Compra</h1>
+<h1>Mis productos</h1>
 
 
+
+{mensajeExito && (
+        <div className="form-texto-l-bien">
+          <p>{mensajeExito}</p> <button onClick={handleCerrarMensajeExito}>&times;</button>
+        </div>
+      )}
 </header>
 </center>
 
 <div className="catalogo">
-{productos.map((producto) => (
-<div className="producto">
-<img src={producto.archivoInput} alt="Producto 1" />
-<h2>{producto.nombreP}</h2>
-<p>Descripción del Producto 1. Precio: ${producto.precio}</p>
-<button className="eliminar" onClick={() => EliminarProducto(producto._id)}>Eliminar</button>
-</div>
- ))}
-
-
+  {
+    productos.map((producto) => (
+      <div className="producto" key={producto._id}>
+        <img src={producto.archivoInput} alt="Producto 1" />
+        <h2>{producto.nombreP}</h2>
+        <p>Precio: ${producto.precio}</p>
+        <button className="eliminar" onClick={() => EliminarProducto(producto._id)}>Eliminar</button>
+      </div>
+    )) }
+  
 </div>
 
 </div>

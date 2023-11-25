@@ -10,8 +10,13 @@ import Catalogo from './Paginas/auth/Catalogo';
 import ProductosC from './Paginas/Admin/consultaP';
 import ConsP from './Paginas/Admin/consultaPedi';
 
+
+
 function App() {
   return (
+ 
+     
+    
     <Fragment>
       <Router>
         <Routes>
@@ -25,11 +30,15 @@ function App() {
           <Route path='/Catalogo' exact element={<Catalogo/>}/>
           <Route path='/productosC' exact element={<ProductosC/>}/>
           <Route path='/ConsP' exact element={<ConsP/>}/>
-      
          
+          
+          
         </Routes>
       </Router>
     </Fragment>
+ 
+ 
+    
   );
 }
 

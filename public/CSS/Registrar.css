@@ -403,8 +403,3 @@ section{
     background-image: url(../img/logo_fondo.png);
     background-size: cover;
 }
-.form-control{
-top: -60px;
-width: 100%;
-margin-bottom: -60px;
-}

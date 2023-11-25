@@ -16,12 +16,14 @@ const ProductosC = () => {
       archivoInput: ""
     });
     const [mensajeExito, setMensajeExito] = useState("");
+
+    const nombres = localStorage.getItem('nombreE');
   
     useEffect(() => {
       const fetchProducts = async () => {
         try {
-          const response = await axios.get("http://localhost:8888/api/v1/front/products");
-          setProductos(response.data.results);
+          const response = await axios.get(`http://localhost:8888/api/v1/front/products/empresa/${nombres}`);
+          setProductos(response.data.products);
         } catch (error) {
           console.error("Error al obtener productos:", error);
         }
@@ -207,7 +209,7 @@ const ProductosC = () => {
 <table>
   <thead>
     <tr>
-    <th>#</th>
+    
       <th>Nombre</th>
       <th>Categoria</th>
       <th>Precio</th>
@@ -217,9 +219,8 @@ const ProductosC = () => {
     </tr>
   </thead>
   <tbody>
-  {productos.map((producto, index) => (
-              <tr key={index}>
-                <th scope="row">{index + 1}</th>
+  {productos.map((producto) => (
+              <tr key={producto._id}>
                 <td>{producto.nombreP}</td>
                 <td>{producto.categoria}</td>
                 <td>{producto.precio}</td>

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const moongose = require('mongoose')
+const empresaModel = require('../models/userModels')
 const productsModel = require ('../models/productModels')
 
 
@@ -37,15 +38,15 @@ router.get('/',
 })
 
 
-router.get('/:nombreP',
+router.get('/buscar/:id',
     async(request, response)=>{
 
         try {
             //traer el parametro id de la uri
             
-            const nombrep = request.params.nombreP 
+            const productoId = request.params.id 
             
-            if(!moongose.Types.ObjectId.isValid(nombrep)){
+            if(!moongose.Types.ObjectId.isValid(productoId)){
                 response
                 .status(500)
                 .json({
@@ -53,14 +54,14 @@ router.get('/:nombreP',
                     msg: "Producto no registrado"
                 })
             }else{
-                const selected_nombreP = await citasModel.findBynombreP(nombrep)
+                const selected_productoId = await productsModel.findById(productoId)
 
-                if (!selected_nombreP) {
+                if (!selected_productoId) {
                     return response
                         .status(404)
                         .json({
                             success: false,
-                            msg:`No se encuentra el producto con nombre: ${nombrep}`
+                            msg:`No se encuentra el producto con id: ${productoId}`
                         })
                     
                 }
@@ -69,7 +70,7 @@ router.get('/:nombreP',
                         .status(200)
                         .json({
                             "success": true, 
-                            "results": selected_nombreP
+                            "results": selected_productoId
                         })
                 }
             }
@@ -86,35 +87,71 @@ router.get('/:nombreP',
 })
 
 
-router.post('/register', 
-            async(req, res)=>{
-                const {nombreP, categoria, precio, region, archivoInput} = req.body;
-                try {
-                    const product = 
-                    await productsModel.create({
-                        nombreP, 
-                        categoria, 
-                        precio, 
-                        region, 
-                        archivoInput
-                    })
-            res
-                .status(201)
-                .json({
-                    sucess: true,
-                    msg: "producto creado exitosamente",
-                })
-                } catch (error) {
-                    res
-                        .status(400)
-                        .json({
-                            sucess: false,
-                            message: error.message
-                        })
-                    
-                }
+router.get('/empresa/:nombreE', async(req, res)=>{
 
-            })
+    const nombreEmpresa = req.params.nombreE;
+    try {
+        // Buscar el usuario por su correo electrónico
+        const user = await empresaModel.findOne({ nombreE: nombreEmpresa });
+  
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Empresa no encontrada',
+            });
+        }
+  
+        // Filtrar los productos asociados al usuario
+        const products = await productsModel.find({ nombreE: user.nombreE });
+  
+        res.status(200).json({
+            success: true,
+            products,
+        });
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error interno del servidor',
+        });
+    }
+  });
+
+
+  router.post('/register', async (req, res) => {
+    const { nombreP, nombreE, categoria, precio, region, archivoInput } = req.body;
+
+    try {
+        // Verificar si la empresa ya existe
+        const empresas = await empresaModel.findOne({ nombreE });
+
+        if (!empresas) {
+            // Si la empresa no existe, crear una nueva
+           const empresa = await empresaModel.create({ nombreE });
+        }
+
+        // Crear el producto asociado a la empresa (ya sea existente o nueva)
+        const product = await productsModel.create({
+            nombreP,
+            nombreE: empresas.nombreE, // Asociar al nombre de la empresa existente o recién creada
+            categoria,
+            precio,
+            region,
+            archivoInput
+        });
+
+        res.status(201).json({
+            success: true,
+            msg: "Producto creado exitosamente",
+            product
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
 
 router.put('/:id',
  async (request, response)=>{

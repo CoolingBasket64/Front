@@ -6,7 +6,10 @@ const productSchema = new mongoose.Schema(
     {
         nombreP:{
             type:String,
-            unique:true,
+            unique: false,
+        },
+        nombreE:{
+            type:String,
         },
         categoria:{
             type:String,
@@ -26,10 +29,6 @@ const productSchema = new mongoose.Schema(
 
     }
 )
-
-
-
-
 
 
 const Product =

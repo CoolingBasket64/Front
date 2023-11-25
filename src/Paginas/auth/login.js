@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const [error, setError] = useState('');
+  
 
   const navigate = useNavigate();
 
@@ -33,17 +34,20 @@ const Login = () => {
         if (tokenPayload ) { 
         const { nombreE, token } = tokenPayload; 
             localStorage.setItem('token', token);
-          localStorage.setItem('nombreE', nombreE)
+          localStorage.setItem('nombreE', nombreE);
+          localStorage.setItem('email', tokenPayload.correo)
             navigate('/IndexA');
                }
+               
           } 
-      setError('');
-    } catch (error) {
-        console.error('Error en el inicio de sesión:', error);
+
+          setError('');
+        } catch (error) {
+        console.error('Error en el registro:', error);
       }
     };
 
-
+    
 
   return (
     <div>
@@ -68,10 +72,11 @@ const Login = () => {
           <form autoComplete='off' onSubmit={datosLogin} className="form-l">
             <h2 className="form-title-l">Iniciar Sesión</h2>
             {error && (
-            <div className='form-texto-mal'>
+            <div className='form-texto-l-mal'>
             {error}
             </div>
-        )}
+            )}
+           
             <div className="form-container-l">
               <div className="form-group-l">
                 <input type="email" id="email" name='email' required value={correo} onChange={(e) => setNombreE(e.target.value)} className="form-input-l" placeholder=" " />
